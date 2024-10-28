@@ -4,6 +4,11 @@ sudo pacman -Syu
 sudo pacman -S --needed reflector
 sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist
 sudo pacman -S --needed - < pacman-packages.txt
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+cd ..
+
 sudo paru -S --needed - < paru-packages.txt
 
 sudo curl -fsSL https://bun.sh/install | bash

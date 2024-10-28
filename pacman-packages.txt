@@ -4,18 +4,14 @@ go
 jdk17-openjdk
 ruby
 nodejs
-
 npm
-nvm
 python-pip
 python-libtmux
-
 fish
 eza
 bat
 tmux
 starship
-
 lsof
 less
 ugrep
@@ -32,6 +28,5 @@ zip
 openssh
 ufw
 neofetch
-paru
 openssl
 gettext
