@@ -9,9 +9,6 @@ SETUVAR --export SHELL:/usr/bin/fish
 SETUVAR VIRTUAL_ENV_DISABLE_PROMPT:1
 SETUVAR ZO_CMD:zo
 SETUVAR Z_CMD:z
-SETUVAR Z_DATA:/home/kai/\x2elocal/share/z/data
-SETUVAR Z_DATA_DIR:/home/kai/\x2elocal/share/z
-SETUVAR Z_EXCLUDE:\x5e/home/kai\x24
 SETUVAR --export __ABBR_TIPS_KEYS:cat\x1egrep\x1ewget\x1ehtop\x1emirrors\x1ea__\x2dh\x1ea__\x2dh\x1ea__b\x1ea__b\x1ea__a\x1ea__a
 SETUVAR --export __ABBR_TIPS_VALUES:bat\x20\x2df\x20\x2d\x2dstyle\x3d\x22header\x2cheader\x2dfilesize\x2cgrid\x2cnumbers\x2csnip\x22\x1eugrep\x20\x2d\x2dcolor\x3dauto\x20\x2dF\x1ewget\x20\x2dc\x1ebtop\x1esudo\x20reflector\x20\x2d\x2dlatest\x2050\x20\x2d\x2dnumber\x2020\x20\x2d\x2dsort\x20score\x20\x2d\x2dsave\x20/etc/pacman\x2ed/mirrorlist\x1e\x1e\x1ea\x1ea\x1el\x1el
 SETUVAR __fish_initialized:3400
