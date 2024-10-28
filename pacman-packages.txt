@@ -30,3 +30,6 @@ ufw
 neofetch
 openssl
 gettext
+fzf
+ttf-firacode-nerd
+ttf-jetbrains-mono-nerd

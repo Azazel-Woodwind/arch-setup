@@ -1,6 +1,3 @@
-set -x LANG en_GB.UTF-8
-set -x LC_ALL en_GB.UTF-8
-
 if status --is-interactive
     if not test -n "$TMUX"
         tmux new-session -As main
@@ -91,7 +88,7 @@ end
 function undo_aliases
     set command $argv
     set n (string length -- $command)
-    set commands (python ~/dev/find_fish_commands.py $command)
+    set commands (python ~/.config/fish/scripts/find_fish_commands.py $command)
     set next_command_index 1
     set res ""
     set next_command_indices $commands[$next_command_index]
@@ -207,7 +204,7 @@ function contained_stdout
         return 0
     end
     
-    python ~/test.py > /tmp/cursor_position.txt
+    python ~/.config/fish/scripts/get_cursor_position.py > /tmp/cursor_position.txt
     set cursor_position (ccat /tmp/cursor_position.txt)
     set col (string split ' ' $cursor_position)[2]
     if not test $col -eq 0
