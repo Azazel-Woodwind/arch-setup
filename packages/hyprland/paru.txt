@@ -1,0 +1,4 @@
+hyprpolkitagent
+aylurs-gtk-shell
+kvantum
+hyprsysteminfo

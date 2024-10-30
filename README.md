@@ -86,7 +86,7 @@ mount /dev/efi_partition /mnt/efi
 - Bootstrap the arch system
 
 ```bash
-pacstrap -K /mnt base linux-zen linux-firmware git vim btrfs-progs grub efibootmgr grub-btrfs inotify-tools timeshift amd-ucode sudo networkmanager pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber
+pacstrap -K /mnt base linux-zen linux-firmware git vim btrfs-progs grub efibootmgr grub-btrfs inotify-tools timeshift amd-ucode sudo networkmanager
 ```
 
 - Generate an fstab file
@@ -178,3 +178,5 @@ reboot
 - Enable grub-btrfsd service to run on boot
 
 `sudo systemctl enable grub-btrfsd`
+
+# Setup Hyprland

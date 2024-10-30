@@ -1,0 +1,3 @@
+[default]
+duration = "30m"
+path = "~/.config/wpaperd/my-wallpapers"

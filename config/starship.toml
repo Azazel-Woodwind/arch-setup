@@ -1,0 +1,480 @@
+# PRIMARY: #00d9ff
+# SECONDARY: #0073ff
+# TERTIARY: #cccccc
+# HIGHLIGHT: #c100ff
+# LINES: #4d4d4d
+# WARNING: #ff5252
+# POWERSHELL: #5b85e6
+# BASH: #ab4923
+# FISH: #00d9ff
+
+format = """
+${custom.topRowStarter}($username )[in](tertiary) $directory($git_branch( $git_state $git_commit)) \
+([using](tertiary) [\\[](brackets) \
+($package )\
+($c )\
+($cmake )\
+($cobol )\
+($daml )\
+($dart )\
+($deno )\
+($dotnet )\
+($elixir )\
+($elm )\
+($erlang )\
+($fennel )\
+($gleam )\
+($golang )\
+($guix_shell )\
+($haskell )\
+($haxe )\
+($helm )\
+($java )\
+($julia )\
+($kotlin )\
+($gradle )\
+($lua )\
+($nim )\
+($nodejs )\
+($ocaml )\
+($opa )\
+($perl )\
+($php )\
+($pulumi )\
+($purescript )\
+($python )\
+($quarto )\
+($raku )\
+($rlang )\
+($red )\
+($ruby )\
+($rust )\
+($scala )\
+($solidity )\
+($swift )\
+($terraform )\
+($typst )\
+($vlang )\
+($vagrant )\
+($zig )\
+($buf )\
+($nix_shell )\
+($conda )\
+($meson )\
+($spack )\
+($crystal )\
+[\\]](brackets) )\
+($container )\
+$all
+${custom.bottomRowStarter}([\\(](lines)$shlvl[\\)](lines))$shell  $character\
+($line_break)\
+"""
+
+right_format = "[Enter \"h\" for helpful commands](lines)"
+
+palette = 'main'
+
+[palettes.main]
+primary = "#00d9ff"
+secondary = "#0073ff"
+tertiary = "#cccccc"
+highlight = "#c100ff"
+lines = "#4d4d4d"
+brackets = "#87afd7"
+warning = "#ff5252"
+powershell = "#5b85e6"
+bash = "#ab4923"
+fish = "#00d9ff"
+
+
+[container]
+format = '[within](tertiary) [$symbol $name]($style)'
+
+[cmd_duration]
+format = '- took [$duration]($style) '
+disabled = true
+
+[custom.git_host_fish]
+command = """\
+if set remote_url (git ls-remote --get-url)
+    set domain (string split ":" $remote_url)[1]
+    set host (string split "@" $domain)[2]
+
+    if string match -q "*github*" $host
+        set GIT_REMOTE_SYMBOL ""
+    else if string match -q "*gitlab*" $host
+        set GIT_REMOTE_SYMBOL ""
+    else if string match -q "*bitbucket*" $host
+        set GIT_REMOTE_SYMBOL ""
+    else if string match -q "*git*" $host
+        set GIT_REMOTE_SYMBOL ""
+    end
+
+    echo "$GIT_REMOTE_SYMBOL $host"
+else
+    echo " localhost"
+end
+"""
+when = 'git rev-parse --is-inside-work-tree > /dev/null 2>&1'
+shell = ["fish"]
+style = 'bold yellow'
+format = '[$output]($style)'
+disabled = true
+
+[custom.git_host_pwsh]
+description = "Display symbol for remote Git server (pwsh)"
+command = """
+$remote_url = git ls-remote --get-url
+$domain = ($remote_url -split ':')[0]
+$remoteHost = ($domain -split '@')[1]
+
+switch -regex ($remoteHost) {\
+    'github'    { $symbol = '' }\
+    'gitlab'    { $symbol = '' }\
+    'bitbucket' { $symbol = '' }\
+    Default    { $symbol = ''; $remoteHost = 'localhost' }\
+}
+
+echo "$symbol $remoteHost"
+"""
+when = "git rev-parse --is-inside-work-tree"
+shell = ["pwsh", "-NoProfile", "-Command", "-"]
+style = 'bold yellow'
+format = '[$output]($style)'
+disabled = true
+
+[shlvl]
+disabled = false
+format = '[$shlvl ]($style)'
+threshold = 3
+
+[line_break]
+disabled = true
+
+[git_metrics]
+disabled = true
+format = '([\[](lines)( [+$added]($added_style))([ -$deleted]($deleted_style)) [\]](lines))'
+
+[custom.topRowStarter]
+style = "lines"
+# format = "[┌]($style)"
+format = ""
+when = true
+disabled = false
+
+# ┌
+# └
+
+[custom.bottomRowStarter]
+style = "lines"
+# format = "[└]($style)"
+format = ""
+when = true
+disabled = false
+
+[character]
+success_symbol = '[](highlight)'
+error_symbol = '[](highlight)'
+
+[username]
+format = "[$user]($style)"
+show_always = false
+style_root = "bold warning"
+style_user = "bold primary"
+
+# Second param
+[hostname]
+disabled = false
+format = "[$hostname]($style)"
+ssh_only = true
+style = "primary"
+trim_at = "-"
+ssh_symbol = " "
+
+[localip]
+ssh_only = true
+format = '[\($localipv4\)](secondary)'
+disabled = false
+
+# Third param
+[directory]
+style = "secondary"
+repo_root_style = "secondary"
+truncate_to_repo = true
+read_only = " 󰌾"
+before_repo_root_style = "dimmed highlight"
+format = '[$path]($style)[$read_only]($read_only_style)'
+
+[sudo]
+disabled = false
+style = 'bold warning'
+format = '[\(sudo\)]($style)'
+
+[git_status]
+ahead = "⇡[$count](tertiary)"
+behind = "⇣[$count](tertiary)"
+deleted = " [$count](tertiary)[󱀷](warning)"
+conflicted = " [$count](tertiary)[󰩌](#ffcc00)"
+modified = " [$count](tertiary)[󱇨](#ff9900)"
+stashed = " [$count](tertiary)[](highlight)"
+untracked = " [$count](tertiary)[󰻭](primary)"
+staged = " [$count](tertiary)[󱉦](#00ff88)"
+renamed = " [$count](tertiary)[󰕁](#5fd7ff)"
+diverged = " [󱦲](primary)[$ahead_count](tertiary)[󱦳](primary)[$behind_count](tertiary) "
+format = '(([\[](lines)$ahead_behind[\]](lines))([\[](lines)$all_status [\]](lines)))'
+disabled = true
+
+[jobs]
+format = '[$number JOB/S]($style)'
+number_threshold = 1
+symbol = ""
+
+[shell]
+fish_indicator = '[](fish)'
+powershell_indicator = '[󰨊](powershell)'
+bash_indicator = '[](bash)'
+unknown_indicator = '?'
+disabled = false
+format = "$indicator"
+
+[os]
+format = "[$symbol$name (\\(v$version\\))]($style)"
+style = "bold blue"
+disabled = true
+
+[aws]
+symbol = " "
+
+[buf]
+symbol = " "
+
+[bun]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[c]
+symbol = ""
+format = '[$symbol( $version(-$name))]($style)'
+
+[cmake]
+symbol = "△"
+format = '[$symbol( $version)]($style)'
+
+[cobol]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[conda]
+symbol = ""
+format = '\[[$symbol( $environment)]($style)\]'
+
+[crystal]
+symbol = ""
+format = '[$symbol( $environment)]($style)'
+
+[daml]
+format = '[$symbol( $version)]($style)'
+
+[dart]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[deno]
+format = '[$symbol( $version)]($style)'
+
+[docker_context]
+symbol = ""
+format = 'with [$symbol( $context)]($style)'
+
+[dotnet]
+symbol = ""
+format = '[$symbol( $version)(🎯 $tfm)]($style)'
+
+[elixir]
+symbol = ""
+format = '[$symbol( $version\(OTP $otp_version\))]($style)'
+
+[elm]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[erlang]
+format = '[$symbol( $version)]($style)'
+
+[fennel]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[git_branch]
+symbol = " "
+format = '[on](tertiary) [$symbol$branch(:$remote_branch)](highlight)'
+
+[golang]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[gradle]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[guix_shell]
+symbol = ""
+format = '[$symbol]($style)'
+
+[haskell]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[haxe]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[helm]
+format = '[$symbol( $version)]($style)'
+
+[java]
+symbol = ""
+format = '[$symbol( $version)](red)'
+
+[julia]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[kotlin]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[lua]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[meson]
+symbol = "󰔷"
+format = '[$symbol( $project)]($style)'
+
+[nim]
+symbol = "󰆥"
+format = '[$symbol( $version)]($style)'
+
+[nix_shell]
+symbol = ""
+format = '[$symbol$state( \($name\))]($style)'
+
+[nodejs]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[ocaml]
+symbol = ""
+format = '[$symbol( $version)(\($switch_indicator$switch_name\))]($style)'
+
+[opa]
+format = '[$symbol( $version)]($style)'
+
+[package]
+symbol = "󰏗"
+format = '[$symbol $version]($style)'
+
+[perl]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[php]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[pulumi]
+format = '[$symbol($username@)$stack]($style)'
+
+[purescript]
+format = '[$symbol( $version)]($style)'
+
+[python]
+symbol = " "
+format = '[${symbol}${pyenv_prefix}(${version})( \($virtualenv\))]($style)'
+
+[raku]
+format = '[$symbol( $version-$vm_version)]($style)'
+
+[red]
+format = '[$symbol( $version)]($style)'
+
+[ruby]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[rust]
+symbol = "󱘗"
+format = '[$symbol( $version)]($style)'
+
+[scala]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[spack]
+format = '[$symbol( $environment)]($style)'
+
+[swift]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[terraform]
+format = '[$symbol$workspace]($style)'
+
+[vagrant]
+format = '[$symbol( $version)]($style)'
+
+[vlang]
+format = '[$symbol( $version)]($style)'
+
+[zig]
+symbol = ""
+format = '[$symbol( $version)]($style)'
+
+[solidity]
+format = '[$symbol( $version)]($style)'
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
