@@ -33,3 +33,4 @@ gettext
 fzf
 ttf-firacode-nerd
 ttf-jetbrains-mono-nerd
+base-devel
