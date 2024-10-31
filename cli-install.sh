@@ -17,11 +17,12 @@ paru -Syu --needed - < packages/shell/paru.txt
 curl -fsSL https://bun.sh/install | bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 
-mkdir -p ~/.config/fish
-cp -r fish ~/.config/
-cp .tmux.conf ~/
-cp starship.toml ~/.config/
-cp .bashrc ~/
-sudo cp .bash_profile /root
+mkdir -p ~/.config
+cp -r config/fish ~/.config/
+cp config/.tmux.conf ~/
+cp config/starship.toml ~/.config/
+cp config/.bashrc ~/
+sudo cp config/.bashrc /root
+sudo cp config/.bash_profile /root
 chsh -s /usr/bin/fish
 sudo fish -c 'fish_add_path ~/.pyenv/bin'

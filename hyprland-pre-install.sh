@@ -18,7 +18,7 @@ export GDK_BACKEND="wayland"
 export CLUTTER_BACKEND="wayland"
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export SDL_VIDEODRIVER="wayland,x11"
-" > ~/.bashrc
+" >> ~/.bashrc
 
 sudo cp ~/.bashrc /root/.bashrc
 cp config/electron-flags.conf ~/.config/
